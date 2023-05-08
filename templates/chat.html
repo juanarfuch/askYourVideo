@@ -9,10 +9,10 @@
     <p>Video URL: {{ video_url }}</p>
 
     <div id="chat">
-        {% if user_question %}
-        <p>User: {{ user_question }}</p>
-        <p>Chatbot: {{ response }}</p>
-        {% endif %}
+        {% for message in conversation %}
+        <p>User: {{ message.question }}</p>
+        <p>Chatbot: {{ message.response }}</p>
+        {% endfor %}
     </div>
 
     <form method="post">
@@ -21,5 +21,7 @@
         <input type="submit" value="Ask">
     </form>
     <a href="{{ url_for('index') }}">Back to Home</a>
+    <a href="{{ url_for('clear_history') }}">Clear history and go back to Home</a>
+
 </body>
 </html>

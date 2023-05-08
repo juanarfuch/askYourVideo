@@ -17,7 +17,7 @@ async def load_transcript(url, add_video_info=False):
         return None
     return transcript
 
-def split_transcript(transcript, chunk_size=1000, chunk_overlap=200):
+def split_transcript(transcript, chunk_size=1000, chunk_overlap=0):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     docs = text_splitter.split_documents(transcript)
     return docs
