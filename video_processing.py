@@ -1,15 +1,15 @@
 import os
 import asyncio
 from dotenv import find_dotenv, load_dotenv
-from langchain.document_loaders import YoutubeLoader
+from youtubePers import YoutubeLoading
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 load_dotenv(find_dotenv())
 openaiapikey = os.environ.get("OPENAI_API_KEY")
 
-async def load_transcript(url, add_video_info=False):
+async def load_transcript(url, add_video_info=True):
     try:
-        loader = YoutubeLoader.from_youtube_url(url, add_video_info=add_video_info)
+        loader = YoutubeLoading.from_youtube_url(url, add_video_info=add_video_info,languages=["en","es"])
         # Use asyncio.to_thread to run the load method asynchronously
         transcript = await asyncio.to_thread(loader.load)
     except Exception as e:
