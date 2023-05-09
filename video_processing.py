@@ -9,7 +9,7 @@ openaiapikey = os.environ.get("OPENAI_API_KEY")
 
 async def load_transcript(url, add_video_info=True):
     try:
-        loader = YoutubeLoading.from_youtube_url(url, add_video_info=add_video_info,languages=["en","es"])
+        loader = YoutubeLoading.from_youtube_url(url, add_video_info=add_video_info)
         # Use asyncio.to_thread to run the load method asynchronously
         transcript = await asyncio.to_thread(loader.load)
     except Exception as e:
