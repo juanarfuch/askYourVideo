@@ -7,14 +7,11 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 load_dotenv(find_dotenv())
 openaiapikey = os.environ.get("OPENAI_API_KEY")
 
-async def load_transcript(url, add_video_info=True):
-    try:
-        loader = YoutubeLoading.from_youtube_url(url, add_video_info=add_video_info)
-        # Use asyncio.to_thread to run the load method asynchronously
-        transcript = await asyncio.to_thread(loader.load)
-    except Exception as e:
-        print(f"An error occurred while loading the transcript: {e}")
-        return None
+def load_transcript(url, add_video_info=True):
+
+    loader = YoutubeLoading.from_youtube_url(url, add_video_info=add_video_info)
+    # Use asyncio.to_thread to run the load method asynchronously   
+    transcript = loader.load()
     return transcript
 
 def split_transcript(transcript, chunk_size=1000, chunk_overlap=0):
