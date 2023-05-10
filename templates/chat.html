@@ -2,26 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/app.css')}}">
     <title>Video Chatbot</title>
 </head>
-<body>
-    <h1>Video Chatbot</h1>
-    <p>Video URL: {{ video_url }}</p>
+<body class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 min-h-screen">
+    <div class="container mx-auto px-4 py-12">
+        <div class="bg-white p-6 mb-6 shadow-lg rounded-lg max-w-lg mx-auto">
+            <h1 class="text-4xl font-bold mb-6 text-center">Video Chatbot</h1>
+            <p class="mb-6 text-center text-lg">Video URL: {{ video_url }}</p>
 
-    <div id="chat">
-        {% for message in conversation %}
-        <p>User: {{ message.question }}</p>
-        <p>Chatbot: {{ message.response }}</p>
-        {% endfor %}
+            <div id="chat" class="bg-gray-100 p-6 mb-6 shadow-inner rounded-lg relative" style="height: 400px; overflow-y: scroll;">
+                {% for message in conversation %}
+                <div class="mb-2">
+                    <div class="flex {{ 'justify-end'}}">
+                        <div class="{{ 'bg-purple-600 text-white'}} max-w-xs mx-2 my-1 p-3 rounded-lg">
+                            <p>{{ message.question }}</p>
+                        </div>                            
+                    </div>
+                    <div class="flex {{ 'justify-start' }}">
+                        <div class="{{ 'bg-gray-300 text-gray-700' }} max-w-xs mx-2 my-1 p-3 rounded-lg">
+                            <p>{{ message.response }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <form method="post" class="bg-gray-100 p-6 mb-6 shadow-inner rounded-lg">
+                <div class="mb-4">
+                    <label for="user_question" class="block text-gray-700">Your question:</label>
+                    <input type="text" id="user_question" name="user_question" class="w-full px-3 py-2 mt-1 border-2 border-gray-300 rounded-md focus:outline-none focus:border-purple-600" required>
+                </div>
+                <input type="submit" value="Ask" class="w-full bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700">
+            </form>
+            <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                <a href="{{ url_for('index') }}" class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700">Back to Home</a>
+                <a href="{{ url_for('clear_history') }}" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">Clear history and go back to Home</a>
+            </div>
+        </div>
     </div>
-
-    <form method="post">
-        <label for="user_question">Your question:</label>
-        <input type="text" id="user_question" name="user_question" required>
-        <input type="submit" value="Ask">
-    </form>
-    <a href="{{ url_for('index') }}">Back to Home</a>
-    <a href="{{ url_for('clear_history') }}">Clear history and go back to Home</a>
-
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>  
 </body>
 </html>

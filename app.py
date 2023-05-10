@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import asyncio
 from video_processing import load_transcript, split_transcript
 from chat_model import get_response_from_query
 from database import create_db, search_similar_documents
+
+db = None
+
 
 app = Flask(__name__)
 app.secret_key = "280404"
@@ -14,8 +17,23 @@ def index():
         return redirect(url_for('chat', video_url=video_url))
     return render_template('index.html')
 
+@app.route('/ask', methods=['POST'])
+def ask():
+    global db
+
+    user_question = request.json['user_question']
+    similar_docs = search_similar_documents(db, user_question)
+    response = get_response_from_query(user_question, similar_docs)
+    session['conversation'].append({"question": user_question, "response": response})
+    session.modified = True
+    return jsonify({"response": response})
+
+
+
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
+    global db
+
     video_url = request.args.get('video_url')
     transcript = asyncio.run(load_transcript(video_url))
     docs = split_transcript(transcript)
@@ -31,6 +49,7 @@ def chat():
         session['conversation'].append({"question": user_question, "response": response})
         session.modified = True
     return render_template('chat.html', video_url=video_url, conversation=session['conversation'])
+
 
 @app.route('/clear_history')
 def clear_history():

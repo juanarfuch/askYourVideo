@@ -9,14 +9,10 @@ async def main():
     transcript = await load_transcript(video_url)
     docs = split_transcript(transcript)
     db = create_db(docs)
-
-    while True:
-        user_question = input("Enter your question or type 'exit' to quit: ")
-        if user_question.lower() == "exit":
-            break
-        similar_docs = search_similar_documents(db, user_question)
-        response = get_response_from_query(user_question, similar_docs)
-        print(f"Answer: {response}")
+    user_question = input("Enter your question or type 'exit' to quit: ")
+    similar_docs = search_similar_documents(db, user_question)
+    response = get_response_from_query(user_question, similar_docs)
+    print(f"Answer: {response}")
 
 if __name__ == "__main__":
     try:
