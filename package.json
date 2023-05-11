@@ -1,10 +1,8 @@
 {
-  "name": "ask-youtube",
- 
-  "scripts": {
-    "watch-css":" npx tailwindcss -i ./static/src/app.css -o ./static/css/app.css --watch"
-  },
   "dependencies": {
     "tailwindcss": "^3.3.2"
+  },
+  "scripts": {
+    "create-css": "npx tailwindcss -i ./static/src/input.css -o ./static/css/main.css --watch"
   }
 }
