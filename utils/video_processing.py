@@ -1,5 +1,4 @@
 import os
-import asyncio
 import logging
 from dotenv import find_dotenv, load_dotenv
 from utils.youtubePers import YoutubeLoading
