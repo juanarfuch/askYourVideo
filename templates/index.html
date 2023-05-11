@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Video Chatbot</title>
+    <title>YouTube Video Chatbot</title>
 </head>
 <body>
-    <h1>Video Chatbot</h1>
-    <form method="post">
-        <label for="video_url">YouTube Video URL:</label>
-        <input type="text" id="video_url" name="video_url" required>
-        <input type="submit" value="Start Chat">
+    <h1>YouTube Video Chatbot</h1>
+    <form method="POST">
+        <input type="url" name="video_url" placeholder="Enter YouTube video URL" required>
+        <button type="submit">Submit</button>
     </form>
 </body>
 </html>

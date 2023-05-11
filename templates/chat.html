@@ -1,27 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Video Chatbot</title>
+    <title>Chat</title>
 </head>
 <body>
-    <h1>Video Chatbot</h1>
-    <p>Video URL: {{ video_url }}</p>
-
-    <div id="chat">
-        {% for message in conversation %}
-        <p>User: {{ message.question }}</p>
-        <p>Chatbot: {{ message.response }}</p>
+    <h1>Chat</h1>
+    <form method="POST">
+        <input type="text" name="user_question" placeholder="Ask a question" required>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="chat_history">
+        {% for speaker, message in chat_history %}
+            <p><strong>{{ speaker }}:</strong> {{ message }}</p>
         {% endfor %}
     </div>
-
-    <form method="post">
-        <label for="user_question">Your question:</label>
-        <input type="text" id="user_question" name="user_question" required>
-        <input type="submit" value="Ask">
-    </form>
-    <a href="{{ url_for('index') }}">Back to Home</a>
-    <a href="{{ url_for('clear_history') }}">Clear history and go back to Home</a>
-
 </body>
 </html>
