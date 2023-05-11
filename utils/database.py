@@ -11,7 +11,6 @@ def create_db(docs, embeddings=embeddings):
         return None
     try:
         database  = FAISS.from_documents(docs, embeddings).as_retriever()
-        return database
     except Exception as e:
         logger.error(f"An error occurred while creating the database: {e}")
         return None

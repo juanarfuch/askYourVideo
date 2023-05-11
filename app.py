@@ -50,5 +50,10 @@ def chat():
     chat_history = session.get('chat_history', [])
     return render_template('chat.html', chat_history=chat_history)
 
+@app.route('/delete-chat-history', methods=['POST'])
+def delete_chat_history():
+    session.pop('chat_history', None)
+    return redirect(url_for('chat'))
+
 if __name__ == "__main__":
-    app.run(debug=True)  # don't use debug mode in production
+    app.run(debug=True) 
