@@ -7,6 +7,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import LLMChain
 from langchain.chat_models import ChatOpenAI
 from utils.prompts import CONDENSE_PROMPT, QA_PROMPT
+from gunicorn import  app
 import os
 
 app = Flask(__name__)
@@ -66,4 +67,4 @@ def delete_chat_history():
     return redirect(url_for('chat'))
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=8000)

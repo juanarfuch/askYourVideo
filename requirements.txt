@@ -1,6 +1,6 @@
 flask
 langchain
-youtube-api
+youtube-transcript-api
 python-dotenv
 langchain
 openai
