@@ -1,10 +1,9 @@
 import streamlit as st
-from dotenv import find_dotenv, load_dotenv
 from utils.youtubePers import YoutubeLoading
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import logging
 
-load_dotenv(find_dotenv())
+
 openaiapikey = st.secrets["OPENAI_API_KEY"]
 logger = logging.getLogger(__name__)
 
