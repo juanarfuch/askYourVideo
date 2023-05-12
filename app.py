@@ -33,11 +33,12 @@ with st.sidebar.expander("🛠️ Settings ", expanded=False):
         st.session_state["chain"] = None
 
 # Set up the Streamlit app layout
-st.title("🤖 Chat Bot with 🧠")
+st.title("🤖 Chat with your videos --By Juan Arfuch")
 st.markdown(""" 
-    Welcome to the ChatBot powered by LangChain, OpenAI, and Streamlit. 
-    This bot uses the transcript of a YouTube video of your choice to answer your questions. 
+       Welcome to my unique ChatBot powered by LangChain, OpenAI, and Streamlit. This is a project for Makers, created with lots of ❤️ and ☕.
+    This bot is not your ordinary bot, it's a super bot that uses the transcript of a YouTube video of your choice to answer your questions. 
     All you have to do is provide a YouTube video URL, and then you can ask any questions related to the video content.
+    Let's make learning fun and interactive!
 """) 
 
 # Wrap transcript loading and splitting in try/except block
@@ -83,8 +84,8 @@ except Exception as e:
 
 # Footer
 st.markdown("""
----
-Built with ❤️ using [Streamlit](https://streamlit.io), [OpenAI](https://openai.com), and [LangChain](https://langchain.ai)
+---Built with ❤️ by [Juan Arfuch](https://github.com/juanarfuch) using [Streamlit](https://streamlit.io), [OpenAI](https://openai.com), and [LangChain](https://langchain.ai)
+This is a project for Makers! Check out my [GitHub](https://github.com/juanarfuch) for more cool projects!
 """)
 
 
