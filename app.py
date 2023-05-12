@@ -14,40 +14,78 @@ st.set_page_config(page_title='🧠ChatBot🤖', layout='wide')
 # Initialize session states
 if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
+if "video_url" not in st.session_state:
+    st.session_state["video_url"] = ""
+if "video_loaded" not in st.session_state:
+    st.session_state["video_loaded"] = False
+if "chain" not in st.session_state:
+    st.session_state["chain"] = None
 
 # Sidebar options
-with st.sidebar.expander("🛠️ ", expanded=False):
+with st.sidebar.expander("🛠️ Settings ", expanded=False):
+    # Add some explanation here
+    st.markdown("""To start a new chat, click the button below. This will clear your chat history and allow you to start a new conversation.""")
     # Option to start a new chat
     if st.button("New Chat"):
         st.session_state["chat_history"] = []
+        st.session_state["video_url"] = ""
+        st.session_state["video_loaded"] = False
+        st.session_state["chain"] = None
 
 # Set up the Streamlit app layout
 st.title("🤖 Chat Bot with 🧠")
-st.subheader(" Powered by 🦜 LangChain + OpenAI + Streamlit")
-if st.session_state["chat_history"]==[]:
-    video_url = st.text_input("Please enter the YouTube video URL: ")
-    if video_url:
-        # Load and split transcript, create embeddings, and vectorstore
-        transcript = load_transcript(video_url)
-        docs = split_transcript(transcript)
-        db = create_db(docs)
+st.markdown(""" 
+    Welcome to the ChatBot powered by LangChain, OpenAI, and Streamlit. 
+    This bot uses the transcript of a YouTube video of your choice to answer your questions. 
+    All you have to do is provide a YouTube video URL, and then you can ask any questions related to the video content.
+""") 
 
-        llm = OpenAI(temperature=0.2)
-        question_generator = LLMChain(llm=llm, prompt=CONDENSE_PROMPT)
-        doc_chain = load_qa_chain(llm, prompt=QA_PROMPT)
-        chain = ConversationalRetrievalChain(
-            retriever=db,
-            question_generator=question_generator,
-            combine_docs_chain=doc_chain,
-        )
+# Wrap transcript loading and splitting in try/except block
+try:
+    if not st.session_state["video_loaded"]:
+        st.session_state["video_url"] = st.text_input("Please enter the YouTube video URL: ")
+        if st.button('Load video'):
+            if st.session_state["video_url"]:
+                with st.spinner('Loading video transcript...'):
+                    transcript = load_transcript(st.session_state["video_url"])
+                    docs = split_transcript(transcript)
+                    db = create_db(docs)
+
+                st.success("Video transcript loaded successfully!")
+                st.session_state["video_loaded"] = True
+
+                llm = OpenAI(temperature=0.2)
+                question_generator = LLMChain(llm=llm, prompt=CONDENSE_PROMPT)
+                doc_chain = load_qa_chain(llm, prompt=QA_PROMPT)
+                st.session_state["chain"] = ConversationalRetrievalChain(
+                    retriever=db,
+                    question_generator=question_generator,
+                    combine_docs_chain=doc_chain,
+                )
         
-        user_question = st.text_input("Enter your question")
-        if user_question:
-            result = chain({"question": user_question, "chat_history": st.session_state["chat_history"]})
-            st.session_state["chat_history"].append((user_question, result['answer']))
+    user_question = st.text_input("Enter your question related to the video content")
+    if st.button('Submit question'):
+        if user_question and st.session_state["video_loaded"] and st.session_state["chain"]:
+            with st.spinner('Processing your question...'):
+                result = st.session_state["chain"]({"question": user_question, "chat_history": st.session_state["chat_history"]})
+                st.session_state["chat_history"].append((user_question, result['answer']))
 
         # Display the conversation history
-        with st.expander("Conversation", expanded=True):
+        with st.expander("Conversation History", expanded=True):
             for user, bot in st.session_state["chat_history"]:
-                st.info(f'User: {user}')
-                st.success(f'Bot: {bot}')
+                st.markdown(f'**User**: {user}')
+                st.markdown(f'<span style="color:green">**Bot**: {bot}</span>', unsafe_allow_html=True)
+except Exception as e:
+    st.error(f'An error occurred: {e}')
+    st.markdown("""
+        Please make sure the YouTube URL is correct and accessible. If the problem persists, try to start a new chat.
+    """)
+
+# Footer
+st.markdown("""
+---
+Built with ❤️ using [Streamlit](https://streamlit.io), [OpenAI](https://openai.com), and [LangChain](https://langchain.ai)
+""")
+
+
+
