@@ -4,7 +4,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 import logging
 
 
-openaiapikey = st.secrets["OPENAI_API_KEY"]
 logger = logging.getLogger(__name__)
 
 def load_transcript(url, add_video_info=True):
