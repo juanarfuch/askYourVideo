@@ -3,8 +3,3 @@ __pycache__/
 *.pyo
 *.pyd
 .env
-# npm dependency directories
-node_modules/
-package-lock.json
-.DS_Store
-*.log
