@@ -1,4 +1,4 @@
-import st
+import streamlit as st
 import logging
 from dotenv import find_dotenv, load_dotenv
 from utils.youtubePers import YoutubeLoading
