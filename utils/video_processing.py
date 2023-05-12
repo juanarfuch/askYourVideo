@@ -5,7 +5,7 @@ from utils.youtubePers import YoutubeLoading
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 load_dotenv(find_dotenv())
-openaiapikey = os.environ.get("OPENAI_API_KEY")
+openaiapikey = st.secrets["OPENAI_API_KEY"]
 
 def load_transcript(url, add_video_info=True):
     try:
