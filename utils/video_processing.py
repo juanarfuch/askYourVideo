@@ -7,7 +7,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 load_dotenv(find_dotenv())
 openaiapikey = os.environ.get("OPENAI_API_KEY")
-logger = logging.getLogger(__name__)
 
 def load_transcript(url, add_video_info=True):
     try:
