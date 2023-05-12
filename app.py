@@ -54,9 +54,9 @@ try:
                 ##Creating the conversational retrieval chain###
                 ###Setting the chat model
                 ##chat= ChatOpenAI(temperature=0.2, model_name="gpt-3.5-turbo")
-                
+                chat=OpenAI(temperature=0.2)
                 question_generator = LLMChain(llm=chat, prompt=CONDENSE_PROMPT)
-                doc_chain = load_qa_chain(chat, prompt=QA_PROMPT, chain_type="stuff")
+                doc_chain = load_qa_chain(chat, prompt=QA_PROMPT)
                 st.session_state["chain"] = ConversationalRetrievalChain(
                     retriever=db,
                     question_generator=question_generator,
