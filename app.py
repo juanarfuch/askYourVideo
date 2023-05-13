@@ -63,7 +63,7 @@ try:
                     combine_docs_chain=doc_chain,
                 )
             else:
-                st.warning("Please provide a valid YouTube URL, make sure you are including the video id")
+                st.warning("Please provide a valid YouTube URL, make sure you are including the video id, your url must be like this:https://www.youtube.com/watch?v=C_78DM8fG6E&t=7s")
     else:
         st.success("Video transcript is already loaded. You can start asking questions.")
 
