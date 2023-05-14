@@ -1,7 +1,8 @@
 import logging
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
-
+import streamlit as st
+openaiapikey = st.secrets["OPENAI_API_KEY"]
 # Instantiate OpenAI embeddings
 embeddings = OpenAIEmbeddings()
 
