@@ -1,6 +1,5 @@
 from langchain.prompts import PromptTemplate    
 
-# Define the condense prompt template
 CONDENSE_PROMPT = PromptTemplate.from_template("""Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
 
         Chat History:
@@ -18,3 +17,7 @@ Helpful answer in markdown:')
 """
 
 QA_PROMPT=PromptTemplate(template=template, input_variables=["question", "context"])
+
+
+
+# Define the condense prompt template
